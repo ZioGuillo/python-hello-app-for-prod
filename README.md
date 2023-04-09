@@ -9,7 +9,7 @@ This is a simple Flask app that can be used as a template for a production-ready
 ## Usage
 Clone this repository:
 ```
-git clone https://github.com/your-username/python-hello-app-for-prod.git
+https://github.com/ZioGuillo/python-hello-app-for-prod.git
 cd python-hello-app-for-prod'
 ```
 ## Install the dependencies:
