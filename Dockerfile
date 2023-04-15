@@ -17,4 +17,4 @@ RUN pip install gunicorn
 EXPOSE 8000
 
 # Run the command to start the application
-CMD gunicorn -w 4 --bind 0.0.0.0:8000 wsgi:app --log-level debug
+CMD gunicorn -w 4 --bind 0.0.0.0:8000 wsgi:app
