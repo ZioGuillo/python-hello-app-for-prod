@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>iBran Solutions: Empowering Digital Transformation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
+</head>
+<body style="height: 100%;">
+  <header style="height: 10%;">
+    <p></p>
+  </header>
+  <div class="container" style="height: 80%;">
+    <div class="row">
+      {% for box in boxes %}
+
+        <div class="section section{{ loop.index }} scrollable" style="height: 100%;">
+          <div class="box">
+            <h2>{{ box['title'] }}</h2>
+            <p>{{ box['content'] | safe }}</p>
+          </div>
+        </div>
+
+      {% endfor %}
+    </div>
+  </div>  
+  <footer style="height: 10%;">
+    <p>&copy; 2023 IBrain. All rights reserved.</p>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+  <script src="{{url_for('static', filename='js/box_disable.js')}}"></script>
+</body>
+</html>
