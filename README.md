@@ -29,7 +29,7 @@ pip install -r requirements.txt
 gunicorn wsgi:app
 ```
 
-Open your web browser and go to http://localhost:5000. You should see a "Hello, World!" message.
+Open your web browser and go to <http://localhost:5000>. You should see a "Hello, World!" message.
 
 ### Customization
 
