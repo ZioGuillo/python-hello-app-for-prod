@@ -25,3 +25,10 @@ jobs:
         run: |
           docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG .
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
+          
+      -  name: Docker Hub Description
+         uses: meeDamian/sync-readme@v1.0.6
+         with:
+           user: ${{ secrets.DOCKER_USERNAME }}
+           pass: ${{ secrets.DOCKER_PASSWORD }}
+           description: true
