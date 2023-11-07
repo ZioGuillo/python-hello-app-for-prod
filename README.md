@@ -33,19 +33,59 @@ Open your web browser and go to <http://localhost:5000>. You should see a "Hello
 
 ### Customization
 
-To customize the app, you can modify the app.py file to add additional routes and functionality. You can also modify the HTML templates in the templates directory to change the look and feel of the app.
+To customize the app, you can modify the app.py file to add additional routes and functionality.  
+You can also modify the HTML templates in the templates directory to change the look and feel of the app.
 
-For example, a new route `/random` has been added which returns a JSON response containing six random numbers between 1 and 99. Here is the function for this route:
+For example, a new route /random has been added, which returns six random numbers between 1 and 99. Here's how to use it:
 
-```python
-@app.route('/random')
-def get_random_numbers():
-    numbers = [random.randint(1, 99) for _ in range(6)]
-    response = {
-        "data": {"random_number": numbers},
-        "message": "success"
-    }
-    return response
+To get six random numbers between 1 and 99, make a GET request to:
+
+```bash
+http://localhost:5000/random
+
+```
+
+If you want to simulate a lottery draw, use the /randomball route, which returns five random numbers between 1 and 69 and one random number between 1 and 26.
+
+```bash
+http://localhost:5000/randomball
+```
+
+## Stocks Information
+
+We have added a new feature to retrieve real-time stock information using the `Alpha Vantage API`. 
+To get started, follow these steps:
+
+Sign up for an Alpha Vantage API key on their official website.
+
+Set your API key as an environment variable in your system.  
+You can do this by adding the following line to your profile configuration file (e.g., .bashrc, .zshrc, or .profile):
+
+```bash
+export ALPHA_VANTAGE_API_KEY=YOUR_API_KEY
+```
+
+Be sure to replace `YOUR_API_KEY` with the actual API key you obtained.
+
+Save the changes and reload your shell or run `source ~/.bashrc` (or the respective file) to apply the environment variable.
+
+Now, you can use the */get_stock_price* and */get_stock_data* routes in your Python App for Production to retrieve stock information. 
+
+Here are some examples:
+
+To get the current price of a stock (e.g., AAPL), make a GET request to:
+
+```bash
+http://localhost:5000/stocks/get_stock_price?symbol=AAPL
+```
+
+To retrieve intraday stock data, use the /get_stock_data route with parameters. For example, to get intraday data for NKE with a 1-minute interval:
+
+```bash
+http://localhost:5000/stocks/get_stock_data/TIME_SERIES_INTRADAY?symbol=NKE&interval=1min
+```
+
+Feel free to customize the routes and data retrieval according to your requirements.
 
 ### Deployment
 
