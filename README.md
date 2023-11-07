@@ -53,7 +53,7 @@ http://localhost:5000/randomball
 
 ## Stocks Information
 
-We have added a new feature to retrieve real-time stock information using the `Alpha Vantage API`. 
+We have added a new feature to retrieve real-time stock information using the `Alpha Vantage API`.  
 To get started, follow these steps:
 
 Sign up for an Alpha Vantage API key on their official website.
@@ -69,7 +69,7 @@ Be sure to replace `YOUR_API_KEY` with the actual API key you obtained.
 
 Save the changes and reload your shell or run `source ~/.bashrc` (or the respective file) to apply the environment variable.
 
-Now, you can use the */get_stock_price* and */get_stock_data* routes in your Python App for Production to retrieve stock information. 
+Now, you can use the */get_stock_price* and */get_stock_data* routes in your Python App for Production to retrieve stock information.  
 
 Here are some examples:
 
