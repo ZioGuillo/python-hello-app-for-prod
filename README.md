@@ -4,9 +4,10 @@ This is a simple Flask app that can be used as a template for a production-ready
 
 ## Requirements
 
-- Python 3.6 or higher
-- Flask 2.0 or higher
+- Python 3.10 or higher
+- Flask 2.3 or higher
 - Gunicorn 20.1.0 or higher
+- Jinja2 3.1.2 or higher
 
 ## Usage
 
