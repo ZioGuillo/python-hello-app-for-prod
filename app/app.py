@@ -13,6 +13,10 @@ def hello_world():
       ('Content-Length', str(len(data)))
     ]
     return data, status, response_headers
+
+@app.get('/health')
+def health():
+    return {"status" : "UP"}
   
 @app.route('/random')
 def get_random_numbers():

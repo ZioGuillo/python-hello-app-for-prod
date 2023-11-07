@@ -1,0 +1,61 @@
+name: Push Docker Image
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  CONTAINER_NAME: python-hello-app-for-prod
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+        shell: bash
+
+      - name: Get the latest tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "::set-output name=latest_tag::$latest_tag"
+        shell: bash
+
+      - name: Calculate the next tag
+        id: calculate_next_tag
+        run: |
+          latest_tag=$INPUT_latest_tag
+          IFS='.' read -r major minor patch <<< "$latest_tag"
+          if [ "$patch" -lt 9 ]; then
+            next_patch=$((patch + 1))
+          else
+            next_patch=1
+            if [ "$minor" -lt 9 ]; then
+              next_minor=$((minor + 1))
+            else
+              next_minor=1
+              next_major=$((major + 1))
+            fi
+          fi
+          next_tag="$next_major.$next_minor.$next_patch"
+          echo "::set-output name=next_tag::$next_tag"
+        shell: bash
+        env:
+          INPUT_latest_tag: ${{ steps.get_latest_tag.outputs.latest_tag }}
+
+      - name: Log in to Docker Hub
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.calculate_next_tag.outputs.next_tag }} .
+          docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.calculate_next_tag.outputs.next_tag }}
