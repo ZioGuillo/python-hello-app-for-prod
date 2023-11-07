@@ -2,7 +2,8 @@ name: Push Docker Image
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -23,10 +24,10 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
         shell: bash
 
-      - name: Get the latest tag
+      - name: Get the latest tag (if available)
         id: get_latest_tag
         run: |
-          latest_tag=$(git describe --tags --abbrev=0)
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
           echo "::set-output name=latest_tag::$latest_tag"
         shell: bash
 
