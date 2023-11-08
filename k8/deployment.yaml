@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-app
+  namespace: api-01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-app
+  template:
+    metadata:
+      labels:
+        app: api-app
+    spec:
+      volumes:
+        - name: nfs-volume
+          persistentVolumeClaim:
+            claimName: pvc-nfs-pv1
+      containers:
+        - name: api-app
+          image: pcisnerp/python-hello-app-for-prod:0.10.0
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: nfs-volume
+              mountPath: /mnt/nfs
+          env:
+            - name: ALPHA_VANTAGE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: alpha-vantage-api-key
+                  key: api-key
+
+
