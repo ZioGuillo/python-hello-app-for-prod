@@ -12,7 +12,7 @@ def hello_world():
       ('Content-type', 'text/plain'),
       ('Content-Length', str(len(data)))
     ]
-    return data, status, response_headers
+    return {data, status, response_headers}
 
 @app.get('/health')
 def health():
