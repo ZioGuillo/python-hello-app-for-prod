@@ -3,6 +3,8 @@ name: Push Docker Image w Tag
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'app/**' # This filters changes in the "app/" folder
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
