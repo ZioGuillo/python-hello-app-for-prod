@@ -47,4 +47,4 @@ def get_random_numbersball():
 app.register_blueprint(stocks_app, url_prefix='/stocks')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

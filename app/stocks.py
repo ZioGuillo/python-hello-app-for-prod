@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, jsonify, Blueprint
 import requests
 
-app = Flask(__name__)
+#app = Flask(__name__)
 stocks_app = Blueprint('stocks_app', __name__)
 
 # Replace 'YOUR_API_KEY' with your Alpha Vantage API key
@@ -62,6 +62,3 @@ def get_stock_data(endpoint):
     data = response.json()
 
     return jsonify(data)
-
-if __name__ == '__main__':
-    app.run()
