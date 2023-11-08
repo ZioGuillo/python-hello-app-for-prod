@@ -8,6 +8,7 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   CONTAINER_NAME: python-hello-app-for-prod
+  IMAGE_TAG: latest
 
 jobs:
   push:
@@ -32,6 +33,7 @@ jobs:
         run: |
           docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} .
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
+          docker push $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
 
       - name: Check Output Parameters
         run: |
