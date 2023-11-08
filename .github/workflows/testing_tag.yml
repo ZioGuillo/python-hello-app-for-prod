@@ -8,7 +8,7 @@ on:
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  CONTAINER_NAME: python-hello-app-for-prod
+  CONTAINER_NAME: python_hello_app_for_prod
 
 jobs:
   push:
