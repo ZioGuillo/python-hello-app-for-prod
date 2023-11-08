@@ -1,4 +1,4 @@
-import random
+import random, requests
 from flask import Flask, request, jsonify
 from stocks import stocks_app
 
