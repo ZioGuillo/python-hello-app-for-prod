@@ -15,7 +15,7 @@ Clone this repository:
 
 ```bash
 https://github.com/ZioGuillo/python-hello-app-for-prod.git
-cd python-hello-app-for-prod'
+cd python-hello-app-for-prod
 ```
 
 ## Install the dependencies
