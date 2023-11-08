@@ -26,3 +26,5 @@ jobs:
           message: Bump version
           prev_tag: 'v'
           update_odoo_module_version: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
