@@ -1,18 +1,22 @@
-name: Incremental Release
-
-on:
-  push:
-    branches: [master]
-
+name: App Versioning
+on: 
+    push:
+      branches: [master]
+  
 jobs:
-  version:
+  release-on-push:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
-      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - run: git config user.name "$GITHUB_ACTOR"
-      - run: npm version minor -m "v%s"
-      - run: VERSION=$(node -p "require('./package.json').version")
-      - run: git tag ${VERSION}
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+      - id: release
+        uses: rymndhng/release-on-push-action@master
+        with:
+          bump_version_scheme: minor
+          tag_prefix: ""
+            
+      - name: Check Output Parameters
+        run: |
+          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
+          echo "Got release version ${{ steps.release.outputs.version }}"
+          echo "Upload release artifacts to ${{ steps.release.outputs.upload_url }}"
