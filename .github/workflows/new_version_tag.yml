@@ -2,29 +2,17 @@ name: Incremental Release
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
-  release:
+  version:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Git
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-        shell: bash
-
-      - name: Incremental Release
-        uses: aurestic/incrementarl-create-release@master
-        with:
-          flag_branch: true
-          message: Bump version
-          prev_tag: 'v'
-          update_odoo_module_version: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: actions/checkout@v2
+      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - run: git config user.name "$GITHUB_ACTOR"
+      - run: npm version minor -m "v%s"
+      - run: VERSION=$(node -p "require('./package.json').version")
+      - run: git tag ${VERSION}
+      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+      - run: git push "https://$GITHUB_ACTOR:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
