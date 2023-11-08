@@ -27,7 +27,7 @@ jobs:
       - name: Get the latest tag (if available)
         id: get_latest_tag
         run: |
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.1")
           echo "::set-output name=latest_tag::$latest_tag"
         shell: bash
 
@@ -55,8 +55,8 @@ jobs:
 
       - name: Log in to Docker Hub
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-      
+
       - name: Build and push Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:$INPUT_latest_tag .
-          docker push $DOCKER_USERNAME/$CONTAINER_NAME:$INPUT_latest_tag
+          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.calculate_next_tag.outputs.next_tag }} .
+          docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.calculate_next_tag.outputs.next_tag }}
